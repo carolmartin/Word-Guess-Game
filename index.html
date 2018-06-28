@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Bible Word Guess</title>
+
+  <!-- Bootstrap 4.1 CSS version -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+    crossorigin="anonymous">
+
+  <link rel="stylesheet" type="assets/css" href="style.css" />
+
+  <!-- Javascript loader - commented out for now ?need type? -->
+  <!-- <script src="assets/js/game.js" type="text/javascript"></script> -->
+
+
+</head>
+
+<body>
+
+
+  <!-- display a Header and instruct user to press any key to start -->
+
+  <div id="main-container" class="container">
+
+    <h1>Bible Hangman!</h1>
+
+    <div class="row about_text">
+
+      <div class="col-sm-12">
+
+
+        <img src="assets/images/attributes_scenic.jpg " alt="Attributes" width=200 height=200/>
+
+        <p>Hi! Press any key to start Hangman</p>
+
+
+        <h2> Press A-Z to make a guess</h2>
+
+        <h4> Current Word </h4>
+
+        <p id="currentWord"></p>
+
+        <br>
+        <input type="text" id="guessedLetter" onkeyup="myFunction()">
+
+
+      </div>
+
+    </div>
+  </div>
+
+
+  <script>
+
+    // define a table of Attributes of God 
+
+    var attributes = ["patient", "lovingkindness", "faithfulness", "wisdom", "knowledge"];
+    var randomAttr;                 // Randomly selected word to guess
+    var currentWord;
+    var guessedLetter;
+
+
+    const maxTries = 15;            // Maximum number of tries player has
+
+    var guessedLetters = [];        // Stores the letters the user guessed
+    var currentWordIndex;           // Index of the current word in the array
+    var guessingWord = [];          // This will be the word we actually build to match the current word
+    var remainingGuesses = 0;       // How many tries the player has left
+    var gameStarted = false;        // Flag to tell if the game has started
+    var hasFinished = false;        // Flag for 'press any key to try again'     
+    var wins = 0;                   // How many wins has the player racked up
+    var arrayOfStrings = [];
+
+
+    randomAttr = attributes[Math.floor(Math.random() * attributes.length)];
+    console.log("random attribute is ", randomAttr);
+
+    //Take the Word attribute selected in the attributes table and load it to a new table for each char
+
+    splitString(randomAttr, "");
+
+
+
+
+
+
+    // Initialize the guessing Word with underlines for the length of the word to find
+    // Underlines will be replaced with characters when guessed letters  match
+
+    for (i = 0; i < arrayOfStrings.length; i++) {
+      guessingWord[i] = "_";
+    }
+    // Display the guessing word ! 
+
+    document.getElementById("currentWord").innerHTML = guessingWord.join(" ");
+    console.log("guessingWord:", guessingWord.join("  "));
+
+
+
+    document.onkeyup = function (event) {
+
+
+
+    }
+
+    // Function to load each individual character in stringToSplit to arrayOfStrings
+
+    function splitString(stringToSplit, separator) {
+      arrayOfStrings = stringToSplit.split(separator);
+
+      console.log('The original string is: "' + stringToSplit + '"');
+      console.log('The separator is: "' + separator + '"');
+      console.log('The array has ' + arrayOfStrings.length + ' elements: ' + arrayOfStrings.join(' / '));
+      console.log(arrayOfStrings);
+
+
+
+    }
+    // // define a table with the value of each character in randomAttr
+    // var randomTable =[];
+    // for i=0; i < randomAttr.length; i++ {
+    //   randomTable[i] = randomAttr.
+
+    // Function to load each individual character in stringToSplit to arrayOfStrings
+
+
+
+    function startGame() {
+      console.log("started Game");
+
+
+    }
+
+
+    function myFunction() {
+      guessedLetter = document.getElementById("guessedLetter");
+      guessedLetter.value = guessedLetter.value.toLowerCase();
+      console.log("guessed letter: ", guessedLetter.value);
+      guessedLetters.push = guessedLetter;
+      console.log(guessedLetters);
+    }
+
+
+
+  </script>
+
+</body>
+
+</html>

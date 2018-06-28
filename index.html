@@ -45,7 +45,20 @@
         <p id="currentWord"></p>
 
         <br>
-        <input type="text" id="guessedLetter" onkeyup="myFunction()">
+        <!-- <input type="text" id="guessedLetter" onkeyup="myFunction()"> -->
+
+
+        <h4>Guessed letters</h4>
+        <br>
+        <h3 id="guessedLettersString"></h3>
+        <br>
+        <h4>Remaining Guesses</h4>
+        <br>
+  
+        <p id="remainingGuesses"></p>
+
+
+
 
 
       </div>
@@ -62,9 +75,10 @@
     var randomAttr;                 // Randomly selected word to guess
     var currentWord;
     var guessedLetter;
+    var guessedLettersString;
 
 
-    const maxTries = 15;            // Maximum number of tries player has
+    const maxTries = 10;            // Maximum number of tries player has
 
     var guessedLetters = [];        // Stores the letters the user guessed
     var currentWordIndex;           // Index of the current word in the array
@@ -75,6 +89,8 @@
     var wins = 0;                   // How many wins has the player racked up
     var arrayOfStrings = [];
 
+    resetGame();
+    updateDisplay();
 
     randomAttr = attributes[Math.floor(Math.random() * attributes.length)];
     console.log("random attribute is ", randomAttr);
@@ -82,9 +98,6 @@
     //Take the Word attribute selected in the attributes table and load it to a new table for each char
 
     splitString(randomAttr, "");
-
-
-
 
 
 
@@ -102,6 +115,7 @@
 
 
     document.onkeyup = function (event) {
+
 
 
 
@@ -129,20 +143,75 @@
 
 
 
-    function startGame() {
-      console.log("started Game");
+    function resetGame() {
+
+      console.log("reset Game");
+      remainingGuesses = maxTries;
+
+      // Clear out arrays
+      guessedLetters = [];
+      guessingWord = [];
+      guessedLetter = "";
+      guessedLettersString ="";
 
 
     }
 
 
-    function myFunction() {
-      guessedLetter = document.getElementById("guessedLetter");
-      guessedLetter.value = guessedLetter.value.toLowerCase();
-      console.log("guessed letter: ", guessedLetter.value);
+    // function myFunction() {
+    // guessedLetter = document.getElementById("guessedLetter");
+    document.onkeyup = function (event) {
+      console.log("in onkeyup function");
+      guessedLetter = event.key.toLowerCase();
+
+      console.log("guessed letter: ", guessedLetter);
       guessedLetters.push = guessedLetter;
       console.log(guessedLetters);
+
+
+      evaluateGuess(guessedLetter);
+      guessedLetter = "";
+
     }
+
+    function evaluateGuess(guessedLetter) {
+      var positions = [];
+
+      for (var i = 0; i < randomAttr.length; i++) {
+        if (randomAttr.charAt(i) === guessedLetter) {
+          positions.push(i)
+        }
+      }
+      //if there are not indicies, remove a guess
+      if (positions.length <= 0) {
+        remainingGuesses--;
+      }
+      else
+        for (var i = 0; i < positions.length; i++) {
+          guessingWord[positions[i]] = guessedLetter;
+          console.log("correct letter " + guessedLetter);
+        }
+      updateDisplay();
+    }
+
+
+
+
+    function updateDisplay() {
+      var guessedLettersString;
+
+      console.log("in updateDisplay");
+      document.getElementById("currentWord").innerHTML = guessingWord.join(" ");
+      console.log("guessingWord:", guessingWord.join("  "));
+      document.getElementById("remainingGuesses").innerHTML = remainingGuesses;
+      guessedLettersString = guessedLetters.join();
+      document.getElementById("guessedLettersString").innerHTML = guessedLettersString;
+      console.log("guessed letters " + guessedLettersString);
+
+
+
+    }
+
 
 
 
